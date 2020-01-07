@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html class="html-loading">
+		
+
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <title>
+    
+      橙子
+    
+  </title>
+  <meta name="author" content="橙子">
+  <meta name="keywords" content="" />
+  <meta name="description" content="浪子Java" />
+	<!-- favicon -->
+  <link rel="shortcut icon" href="/blog/img/favicon.ico">
+
+  <!-- css -->
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/blog/css/Annie.css">
+
+  
+  <!-- jquery -->
+	
+<script src="/blog/js/jquery.min.js"></script>
+
+
+  <!-- leancloud -->
+  
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+<script src="/blog/js/leancloud.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+	<body>
+		<!-- Preloader -->
+
+	<div id="preloader">
+		<div class="pre-container">
+			
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+						
+		</div>
+	</div>
+
+
+<!-- header -->
+<header class="fixbackground" data-img-mode="normal" data-normal-src="/blog/img/2.jpg" data-random-max="110" data-random-src="https://sariay.github.io/Random-img/">
+	<div class="mask">
+		<!-- Logo and navigation -->
+		<div class="h-header">
+			<div id="logo">
+				<a href="/blog">
+					
+						橙子
+					
+				</a>
+			</div>
+			
+			<div id="navigation-show">
+				<ul>
+	
+		<li class="menu-home">
+			<a href="/blog/" class="menu-item-home">主页</a>
+		</li>
+	
+		<li class="menu-archive">
+			<a href="/blog/archives" class="menu-item-archive">文章</a>
+		</li>
+	
+		<li class="menu-categories">
+			<a href="/blog/categories" class="menu-item-categories">分类</a>
+		</li>
+	
+		<li class="menu-tags">
+			<a href="/blog/tags" class="menu-item-tags">标签</a>
+		</li>
+	
+		<li class="menu-about">
+			<a href="/blog/about" class="menu-item-about">关于</a>
+		</li>
+	
+
+	
+		<li class="menu-search">
+			<a href="javascript:;" target="" class="popup-trigger">搜索</a>
+		</li>
+	
+</ul>
+			</div>				
+		</div>
+
+		<!-- motto -->
+		<div class="h-body">	
+			
+				<p class="motto"></p>
+			
+		</div>
+		
+		<!-- others: such as time... -->			
+		<div class="h-footer">
+			<a href="javascript:;" id="read-more"><i class="fa fa-angle-double-down" aria-hidden="true"></i>
+			</a>
+
+			
+		</div>
+	</div>
+</header>
+
+<div id="navigation-hide">
+	<!-- Progress bar -->
+	<div id="progress-bar"></div>
+
+	<!-- Progress percent -->
+	<div id="progress-percentage"><h1>0.0%</h1></div>
+
+	<div class="toc-switch"><span class="switch-button">目录</span></div>
+
+	<!-- Page title -->
+	<p>
+		
+			主页
+		
+	</p>
+
+	<!-- Nav trigger for navigation-H-->
+	<a class="nav-trigger"><span></span></a>
+</div>
+
+<!-- Navigation in div(id="navigation-H") -->
+<nav class="nav-container" id="cd-nav">
+	<div class="nav-header">
+		<h3>Menu</h3>
+		<a href="javascript:;" class="nav-close"></a>
+	</div>
+	<div class="nav-body">
+		<ul>
+	
+		<li class="menu-home">
+			<a href="/blog/" class="menu-item-home">主页</a>
+		</li>
+	
+		<li class="menu-archive">
+			<a href="/blog/archives" class="menu-item-archive">文章</a>
+		</li>
+	
+		<li class="menu-categories">
+			<a href="/blog/categories" class="menu-item-categories">分类</a>
+		</li>
+	
+		<li class="menu-tags">
+			<a href="/blog/tags" class="menu-item-tags">标签</a>
+		</li>
+	
+		<li class="menu-about">
+			<a href="/blog/about" class="menu-item-about">关于</a>
+		</li>
+	
+
+	
+		<li class="menu-search">
+			<a href="javascript:;" target="" class="popup-trigger">搜索</a>
+		</li>
+	
+</ul>
+	</div>
+	<div class="nav-footer">
+		<ul>
+	
+		<li>
+			<a href="https://github.com/DummyProdigal/" target="_blank">
+				<i class="fa fa-github"></i>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+</nav>
+			
+		<!--main-->
+		<main>
+			
+
+
+
+	<!--pure style-->
+	<div class="layout-pure">
+	<div id="layout-pure">	
+	
+		<div class="post" id="post">
+			<div class="post-text">
+				<div class="post-title" id="post-title-index">			
+					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+					
+	<a href="/blog/2020/01/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" itemprop="url">
+		每天一个设计模式-单例模式
+	</a>
+
+				</div>
+
+				<div class="post-content">
+					
+						定义“确保一个类只有一个实例，并提供一个全局访问点来访问这个唯一的实例。”&emsp;&emsp;单例模式有3个要点：一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例；根据这三个要点可知，类的构造函数私有化，并且在单例类中创建唯一的实例，最后提供静态方法供外部共享访问唯一的实例。
+饿汉式
+示例12345678910111213/** * 饿汉式 */public class EagerSingleton &#123;    private static final EagerSingleton instance = new EagerSingle...
+					
+				</div>
+				
+				<div class="post-meta">
+					<span>
+						发布于
+						<i>
+							
+
+
+
+
+
+
+	<a href="/blog/2020/01/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" itemprop="url">
+		<time datetime="2020-01-05T16:00:00.000Z" itemprop="datePublished">
+	  		2020-01-06
+	  </time>
+	</a> 
+
+						</i>
+					</span>
+					
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+					
+						<span class="right">      	
+							<a href="/blog/2020/01/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="阅读全文" external="false">阅读全文</a>	
+						</span>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="post" id="post">
+			<div class="post-text">
+				<div class="post-title" id="post-title-index">			
+					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+					
+	<a href="/blog/2020/01/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" itemprop="url">
+		每天一个设计模式-抽象工厂模式
+	</a>
+
+				</div>
+
+				<div class="post-content">
+					
+						定义“提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。”&emsp;&emsp;抽象工厂又称为工具模式，与工厂方法相比，抽象工厂模式的具体工厂不只是创建一种产品，它负责创建一族产品（产品族）。
+UML类图
+代码示例123456/** * A产品接口 */public interface AbstractProductA &#123;    void print();&#125;
+123456789/** * 具体产品A，样式1 */public class ProductA1 implements AbstractProductA &#123;    @Overrid...
+					
+				</div>
+				
+				<div class="post-meta">
+					<span>
+						发布于
+						<i>
+							
+
+
+
+
+
+
+	<a href="/blog/2020/01/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" itemprop="url">
+		<time datetime="2020-01-04T16:00:00.000Z" itemprop="datePublished">
+	  		2020-01-05
+	  </time>
+	</a> 
+
+						</i>
+					</span>
+					
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+					
+						<span class="right">      	
+							<a href="/blog/2020/01/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="阅读全文" external="false">阅读全文</a>	
+						</span>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="post" id="post">
+			<div class="post-text">
+				<div class="post-title" id="post-title-index">			
+					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+					
+	<a href="/blog/2020/01/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" itemprop="url">
+		每天一个设计模式-工厂方法模式
+	</a>
+
+				</div>
+
+				<div class="post-content">
+					
+						定义“定义一个用于创建对象的接口，但是让子类决定将哪一个类实例化。工厂方法模式让一个类的实例化延迟到其子类。”&emsp;&emsp;工厂方法模式简称工厂模式，又可称为虚拟构造器模式，或者多态工厂模式。工厂父类负责定义创建产品对象的公共接口，而工厂子类实现父类接口生成产品对象。
+UML类图
+代码示例1234567/** * 产品接口 */public interface AbstractProduct &#123;    void print();&#125;
+123456789/** * 产品A */public class ProductA implements AbstractPr...
+					
+				</div>
+				
+				<div class="post-meta">
+					<span>
+						发布于
+						<i>
+							
+
+
+
+
+
+
+	<a href="/blog/2020/01/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" itemprop="url">
+		<time datetime="2020-01-03T16:00:00.000Z" itemprop="datePublished">
+	  		2020-01-04
+	  </time>
+	</a> 
+
+						</i>
+					</span>
+					
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+					
+						<span class="right">      	
+							<a href="/blog/2020/01/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" title="阅读全文" external="false">阅读全文</a>	
+						</span>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="post" id="post">
+			<div class="post-text">
+				<div class="post-title" id="post-title-index">			
+					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+					
+	<a href="/blog/2019/12/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" itemprop="url">
+		面向对象设计的7个原则
+	</a>
+
+				</div>
+
+				<div class="post-content">
+					
+						设计模式定义&emsp;&emsp;GoF对设计模式的定义：设计模式实在特定环境下为解决某一通用软件设计问题提供的一套定制的解决方案，该方案描述了对象和类之间的相互作用。也就是说，设计模式是一套被反复使用的、经过分类的代码设计经验的总结，为了代码的重用、提高代码的可靠性、更易于理解。
+设计模式的分类设计模式根据功能目的可分为创建型、结构性、和行为型三类。
+
+
+
+创建型
+结构型
+行为型
+
+
+
+抽象工厂模式建造者模式工厂方法模式原型模式单例模式
+适配器模式组合模式桥接模式装饰模式外观模式享元模式代理模式
+责任链模式命令模式解释器模式迭代器模式中介者模式备忘录模式观察者模式状态模式策略模式模板...
+					
+				</div>
+				
+				<div class="post-meta">
+					<span>
+						发布于
+						<i>
+							
+
+
+
+
+
+
+	<a href="/blog/2019/12/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" itemprop="url">
+		<time datetime="2019-12-21T16:00:00.000Z" itemprop="datePublished">
+	  		2019-12-22
+	  </time>
+	</a> 
+
+						</i>
+					</span>
+					
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+					
+						<span class="right">      	
+							<a href="/blog/2019/12/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" title="阅读全文" external="false">阅读全文</a>	
+						</span>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="post" id="post">
+			<div class="post-text">
+				<div class="post-title" id="post-title-index">			
+					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+					
+	<a href="/blog/2019/12/07/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" itemprop="url">
+		浅谈Java垃圾回收器
+	</a>
+
+				</div>
+
+				<div class="post-content">
+					
+						&emsp;&emsp;前面文章提到过垃圾回收算法，而垃圾回收器可以说是对垃圾回收算法的具体实现。Java中的垃圾回收器包括：年轻代收集器（Serial/ParNew/Parallel Scavenge）和老年代收集器（CMS/Serial Old/Parallel Old），以及可以不需要其他收集器配合就可独立完成分代回收工作的G1（Garbage First）收集器。
+年轻代Serial 收集器== 复制算法 ==&emsp;&emsp;从名字就可以看出，Serial是个串行化的单线程收集器，当他在进行收集工作时，会暂停其他所有的工作线程，直到它收集结束，该暂停阶段称之为“Stop ...
+					
+				</div>
+				
+				<div class="post-meta">
+					<span>
+						发布于
+						<i>
+							
+
+
+
+
+
+
+	<a href="/blog/2019/12/07/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" itemprop="url">
+		<time datetime="2019-12-06T16:00:00.000Z" itemprop="datePublished">
+	  		2019-12-07
+	  </time>
+	</a> 
+
+						</i>
+					</span>
+					
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+					
+						<span class="right">      	
+							<a href="/blog/2019/12/07/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" title="阅读全文" external="false">阅读全文</a>	
+						</span>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="post" id="post">
+			<div class="post-text">
+				<div class="post-title" id="post-title-index">			
+					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+					
+	<a href="/blog/2019/12/01/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/" itemprop="url">
+		浅谈Java垃圾回收算法
+	</a>
+
+				</div>
+
+				<div class="post-content">
+					
+						Java不是自动回收吗，为什么还需要管理？&emsp;&emsp;对于Java垃圾回收机制，很多人都认为垃圾收集是Java语言的产物。实际上，早在1960年（Java在1995年开源）Lisp语言就是第一个真正使用内存动态分配和垃圾收集技术的语言。&emsp;&emsp;目前Java的垃圾收集技术也很成熟了，那为什么我们还要去了解Java的垃圾收集机制和内存分配呢？在系统需求不断增加，并发量上升的情况下，就必须对JVM进行管理和调优。那垃圾回收器是如何工作的呢，我们首先大致介绍一下有关垃圾回收的算法。
+对象是否存活&emsp;&emsp;垃圾回收的过程中，首先要做的事情就是确定对象“活着...
+					
+				</div>
+				
+				<div class="post-meta">
+					<span>
+						发布于
+						<i>
+							
+
+
+
+
+
+
+	<a href="/blog/2019/12/01/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/" itemprop="url">
+		<time datetime="2019-11-30T16:00:00.000Z" itemprop="datePublished">
+	  		2019-12-01
+	  </time>
+	</a> 
+
+						</i>
+					</span>
+					
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+					
+						<span class="right">      	
+							<a href="/blog/2019/12/01/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/" title="阅读全文" external="false">阅读全文</a>	
+						</span>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="post" id="post">
+			<div class="post-text">
+				<div class="post-title" id="post-title-index">			
+					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+					
+	<a href="/blog/2019/11/30/JVM%E5%9F%BA%E7%A1%80/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" itemprop="url">
+		浅谈JVM内存模型
+	</a>
+
+				</div>
+
+				<div class="post-content">
+					
+						运行时数据区如下图所示，Java 虚拟机在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。
+注：图片来源于网络
+
+线程私有
+程序计数器&emsp;&emsp;程序计数器是一块较小的内存空间，用作程序执行字节码的行号指示。为了线程的切换能够恢复到正确的执行位置，每条线程都有一个独立的程序计数器，各个线程间互不影响，所以该内存区域是线程私有的。&emsp;&emsp;此内存区域是唯一一个在JVM规范中没有规定任何OOM情况的区域。
+Java虚拟机栈&emsp;&emsp;虚拟机栈也是线程私有的，它描述的是方法执行的内存模型，即每个方法在执行的同时都会创建一个栈帧，用...
+					
+				</div>
+				
+				<div class="post-meta">
+					<span>
+						发布于
+						<i>
+							
+
+
+
+
+
+
+	<a href="/blog/2019/11/30/JVM%E5%9F%BA%E7%A1%80/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" itemprop="url">
+		<time datetime="2019-11-29T16:00:00.000Z" itemprop="datePublished">
+	  		2019-11-30
+	  </time>
+	</a> 
+
+						</i>
+					</span>
+					
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+					
+						<span class="right">      	
+							<a href="/blog/2019/11/30/JVM%E5%9F%BA%E7%A1%80/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" title="阅读全文" external="false">阅读全文</a>	
+						</span>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="post" id="post">
+			<div class="post-text">
+				<div class="post-title" id="post-title-index">			
+					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+					
+	<a href="/blog/2019/11/30/%E5%AE%9E%E6%88%98/%E5%AE%9E%E6%88%98%EF%BC%9AOOM/" itemprop="url">
+		实战：OOM
+	</a>
+
+				</div>
+
+				<div class="post-content">
+					
+						&emsp;&emsp;在虚拟机的规范中，除了程序技术器外，其他的几个运行时数据区都有发生OutOfMemoryError异常的可能，下面将通过实例验证异常发生的几个场景。
+Java堆溢出&emsp;&emsp;Java堆中主要存储对象实例，只要不断创建对象，保证GC Roots到对象之间有引用链，避免垃圾回收清除这些这些对象，那么在对象数量达到最大堆的容量限制后就会产生内存溢出现象。
+123456789101112131415/** * VM参数：-Xms20m -Xmx20m */public class HeapOOM &#123;    static class OOMObjec...
+					
+				</div>
+				
+				<div class="post-meta">
+					<span>
+						发布于
+						<i>
+							
+
+
+
+
+
+
+	<a href="/blog/2019/11/30/%E5%AE%9E%E6%88%98/%E5%AE%9E%E6%88%98%EF%BC%9AOOM/" itemprop="url">
+		<time datetime="2019-11-29T16:00:00.000Z" itemprop="datePublished">
+	  		2019-11-30
+	  </time>
+	</a> 
+
+						</i>
+					</span>
+					
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+					
+						<span class="right">      	
+							<a href="/blog/2019/11/30/%E5%AE%9E%E6%88%98/%E5%AE%9E%E6%88%98%EF%BC%9AOOM/" title="阅读全文" external="false">阅读全文</a>	
+						</span>
+					
+				</div>
+			</div>
+		</div>
+	
+	</div>
+
+	
+	<div id="pagination">
+		
+	</div>
+
+	
+
+</div>
+
+
+		</main>
+
+		<!--footer-->
+		<footer>
+	<div class="social">
+		<ul>
+	
+		<li>
+			<a href="https://github.com/DummyProdigal/" target="_blank">
+				<i class="fa fa-github"></i>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+		
+	<div class="copyright">
+		<p>
+			 
+				&copy;2019 - 2020, content by 橙子. All Rights Reserved.
+			
+			
+			
+
+	<!-- busuanzi -->
+	<!-- busuanzi -->
+<!-- 
+		
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+		<span id="busuanzi_container_site_pv">
+	    	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+		</span>
+
+		<span id="busuanzi_container_site_uv">
+	  		本站访客数<span id="busuanzi_value_site_uv"></span>人次
+		</span>
+		
+	
+
+ -->
+
+
+		</p>
+		<p>
+			<a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> Theme <a href="https://github.com/Sariay/hexo-theme-Annie" title="Annie" target="_blank" rel="noopener">Annie</a> by Sariay.
+			<a href="javascript:zh_tran('s');" class="zh_click" id="zh_click_s">简体</a> 
+			<a href="javascript:zh_tran('t');" class="zh_click" id="zh_click_t">繁體</a>				
+		</p>
+	</div>		
+</footer>
+		
+	<!-- set '1' to show motto in all pages! -->
+
+	
+<script src="/blog/plugin/motto/motto.js"></script>
+
+	
+	<script type="text/javascript">
+		$(".motto").html( getMingYanContent() );
+	</script>	
+
+
+
+
+	<!--
+	时间：2018-10-3
+	描述：
+		插件名称：hexo-generator-search-zip
+		插件来源: https://github.com/SuperKieran/hexo-generator-search-zip
+		代码参考：https://github.com/SuperKieran/TKL/blob/master/layout/_partial/search.ejs(Include: js & css)	
+-->
+<div class="popup search-popup local-search-popup" >
+	<div class="local-search-container">
+		<span class="popup-btn-close">
+      		ESC
+   		</span>
+		<div class="local-search-header">
+			<div class="input-prompt">				
+			</div>
+			<input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+		</div>
+		<div class="local-search-body">
+			<div id="local-search-output"></div>
+		</div>
+		<div class="local-search-footer">
+			<div class="topN-post">				
+				
+								
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script src="/blog/plugin/search/ziploader.js"></script>
+<script src="/blog/plugin/search/search.js"></script>
+
+
+<script type="text/javascript">
+	var search_path = 'search.json',
+		zip_Path = '/blog/search.zip',
+		version_Path = '/blog/searchVersion.txt',
+		input_Trigger = 'auto',
+		top_N = '2';
+
+	themeLocalSearch({
+		search_path, 
+		zip_Path, 
+		version_Path, 
+		input_Trigger, 
+		top_N
+	});
+</script>
+
+
+<!-- love effect -->
+
+
+<!-- back to top -->
+
+	
+	<div id="totop">
+  		<a href="javascript:;"  name="TOTOP" class="fa fa-arrow-up" ></a>
+	</div>
+
+
+
+
+<!-- site analysis -->
+
+
+	<!-- site-analysis -->
+	
+
+	
+	
+	
+	
+ 
+
+
+<script src="/blog/plugin/vibrant/vibrant.js"></script>
+<script src="/blog/plugin/chinese/chinese.js"></script>
+<script src="/blog/plugin/imgLazyLoader/yall.min.js"></script>
+<script src="/blog/plugin/imgResize/jquery.resizeimagetoparent.min.js"></script>
+<script src="/blog/plugin/nicescroll/jquery.nicescroll.js"></script>
+<script src="/blog/js/resizediv.js"></script>
+<script src="/blog/js/main.js"></script>
+
+	</body>	
+</html>

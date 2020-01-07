@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html class="html-loading">
+		
+
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <title>
+    
+      浅谈Java垃圾回收器 | 橙子
+    
+  </title>
+  <meta name="author" content="橙子">
+  <meta name="keywords" content="" />
+  <meta name="description" content="浪子Java" />
+	<!-- favicon -->
+  <link rel="shortcut icon" href="/blog/img/favicon.ico">
+
+  <!-- css -->
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/blog/css/Annie.css">
+
+  
+  <!-- jquery -->
+	
+<script src="/blog/js/jquery.min.js"></script>
+
+
+  <!-- leancloud -->
+  
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+<script src="/blog/js/leancloud.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+	<body>
+		<!-- Preloader -->
+
+	<div id="preloader">
+		<div class="pre-container">
+			
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+						
+		</div>
+	</div>
+
+
+<!-- header -->
+<header class="fixbackground" data-img-mode="normal" data-normal-src="/blog/img/2.jpg" data-random-max="110" data-random-src="https://sariay.github.io/Random-img/">
+	<div class="mask">
+		<!-- Logo and navigation -->
+		<div class="h-header">
+			<div id="logo">
+				<a href="/blog">
+					
+						橙子
+					
+				</a>
+			</div>
+			
+			<div id="navigation-show">
+				<ul>
+	
+		<li class="menu-home">
+			<a href="/blog/" class="menu-item-home">主页</a>
+		</li>
+	
+		<li class="menu-archive">
+			<a href="/blog/archives" class="menu-item-archive">文章</a>
+		</li>
+	
+		<li class="menu-categories">
+			<a href="/blog/categories" class="menu-item-categories">分类</a>
+		</li>
+	
+		<li class="menu-tags">
+			<a href="/blog/tags" class="menu-item-tags">标签</a>
+		</li>
+	
+		<li class="menu-about">
+			<a href="/blog/about" class="menu-item-about">关于</a>
+		</li>
+	
+
+	
+		<li class="menu-search">
+			<a href="javascript:;" target="" class="popup-trigger">搜索</a>
+		</li>
+	
+</ul>
+			</div>				
+		</div>
+
+		<!-- motto -->
+		<div class="h-body">	
+			
+				<p class="motto"></p>
+			
+		</div>
+		
+		<!-- others: such as time... -->			
+		<div class="h-footer">
+			<a href="javascript:;" id="read-more"><i class="fa fa-angle-double-down" aria-hidden="true"></i>
+			</a>
+
+			
+		</div>
+	</div>
+</header>
+
+<div id="navigation-hide">
+	<!-- Progress bar -->
+	<div id="progress-bar"></div>
+
+	<!-- Progress percent -->
+	<div id="progress-percentage"><h1>0.0%</h1></div>
+
+	<div class="toc-switch"><span class="switch-button">目录</span></div>
+
+	<!-- Page title -->
+	<p>
+		
+			当前文章&nbsp;:&nbsp;《浅谈Java垃圾回收器》
+		
+	</p>
+
+	<!-- Nav trigger for navigation-H-->
+	<a class="nav-trigger"><span></span></a>
+</div>
+
+<!-- Navigation in div(id="navigation-H") -->
+<nav class="nav-container" id="cd-nav">
+	<div class="nav-header">
+		<h3>Menu</h3>
+		<a href="javascript:;" class="nav-close"></a>
+	</div>
+	<div class="nav-body">
+		<ul>
+	
+		<li class="menu-home">
+			<a href="/blog/" class="menu-item-home">主页</a>
+		</li>
+	
+		<li class="menu-archive">
+			<a href="/blog/archives" class="menu-item-archive">文章</a>
+		</li>
+	
+		<li class="menu-categories">
+			<a href="/blog/categories" class="menu-item-categories">分类</a>
+		</li>
+	
+		<li class="menu-tags">
+			<a href="/blog/tags" class="menu-item-tags">标签</a>
+		</li>
+	
+		<li class="menu-about">
+			<a href="/blog/about" class="menu-item-about">关于</a>
+		</li>
+	
+
+	
+		<li class="menu-search">
+			<a href="javascript:;" target="" class="popup-trigger">搜索</a>
+		</li>
+	
+</ul>
+	</div>
+	<div class="nav-footer">
+		<ul>
+	
+		<li>
+			<a href="https://github.com/DummyProdigal/" target="_blank">
+				<i class="fa fa-github"></i>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+</nav>
+			
+		<!--main-->
+		<main>
+			<!--
+	时间：2018-11-17
+	描述：
+		插件名称：katelog.min.js
+		插件作者：KELEN
+		插件来源: https://github.com/KELEN/katelog
+-->
+
+	
+		<div class="layout-toc">
+			<div id="layout-toc">
+				<div class="k-catelog-list" id="catelog-list" data-title="文章目录"></div>
+			</div>
+		</div>
+
+		
+		
+<script src="/blog/plugin/toc/katelog.min.js"></script>
+
+
+		
+	 
+
+<div class="layout-post">
+	<div id="layout-post">
+	<div class="article-title">
+		<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+		
+	<a href="/blog/2019/12/07/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" itemprop="url">
+		浅谈Java垃圾回收器
+	</a>
+
+	</div>
+
+	<div class="article-meta">
+		<span>
+			<i class="fa fa-calendar"></i>
+			
+
+
+	发布于
+
+	<a href="/blog/2019/12/07/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" itemprop="url">
+		<time datetime="2019-12-06T16:00:00.000Z" itemprop="datePublished">
+	  		2019-12-07
+	  </time>
+	</a>
+	&nbsp;
+
+
+
+
+
+			<!-- 
+
+
+
+
+	更新于
+
+	<a href="/blog/2019/12/07/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" itemprop="url">
+		<time datetime="2019-12-06T16:00:00.000Z" itemprop="dateUpdated">
+	  		2020-01-04
+	  </time>
+	</a> 
+
+
+ -->
+		</span>
+		<span>
+			<i class="fa fa-category"></i>
+			分类：
+	    		
+     	<a href="/blog/categories/JVM%E5%9F%BA%E7%A1%80/" class=" ">
+     		JVM基础
+     	</a>      		
+    
+		
+		</span>
+		
+		
+
+
+
+	</div>
+
+	<div class="article-content" id="article-content">
+		<p>&emsp;&emsp;前面文章提到过垃圾回收算法，而垃圾回收器可以说是对垃圾回收算法的具体实现。Java中的垃圾回收器包括：年轻代收集器（Serial/ParNew/Parallel Scavenge）和老年代收集器（CMS/Serial Old/Parallel Old），以及可以不需要其他收集器配合就可独立完成分代回收工作的G1（Garbage First）收集器。</p>
+<h1 id="年轻代"><a href="#年轻代" class="headerlink" title="年轻代"></a>年轻代</h1><h2 id="Serial-收集器"><a href="#Serial-收集器" class="headerlink" title="Serial 收集器"></a>Serial 收集器</h2><p><a href="/blog/2019/12/01/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/#复制算法">== 复制算法 ==</a><br>&emsp;&emsp;从名字就可以看出，Serial是个串行化的单线程收集器，当他在进行收集工作时，会暂停其他所有的工作线程，直到它收集结束，该暂停阶段称之为“Stop The World”（个人对该词的理解”世界静止“），简称STW。因为该收集器会造成其他所有线程暂停工作，所以用户线程也会暂停等待。如果每隔一段时间就暂停一会儿，那将会给用户带来极差的体验。所以要是面对用户的、交互比较高的服务，就无法更好地满足用户的体验了。</p>
+<h2 id="ParNew-收集器"><a href="#ParNew-收集器" class="headerlink" title="ParNew 收集器"></a>ParNew 收集器</h2><p><a href="/blog/2019/12/01/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/#复制算法">== 复制算法 ==</a><br>&emsp;&emsp;ParNew是并行收集器，可以说是Serial收集器的多线程版本，除了线程是多线程外，其他实现基本基于Serial收集器，共用了很多代码，同样的，ParNew收集器也会造成STW。JDK1.5时推出了CMS收集器，作为老年代收集器，却只能在Serial收集器和ParNew收集器中选一个配合使用（JDK1.4就已经存在Parallel Scavenge收集器，无法与CMS配合使用）。ParNew收集器在单CPU的情况下绝不会比Serial收集器的效率高，但在多CPU的情况下，会更好的利用系统资源。所以在多CPU的情况下，一般会首选ParNew收集器。</p>
+<h2 id="Parallel-Scavenge-收集器"><a href="#Parallel-Scavenge-收集器" class="headerlink" title="Parallel Scavenge 收集器"></a>Parallel Scavenge 收集器</h2><p><a href="/blog/2019/12/01/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/#复制算法">== 复制算法 ==</a><br>&emsp;&emsp;Parallel Scavenge收集器是个新生代收集器，和ParNew收集器一样，也是并行的多线程收集器。与其他收集器的关注点不同的是，Parallel Scavenge收集器关注的是吞吐量，即吞吐量=运行用户代码时间/总耗时（运行用户代码时间+垃圾回收的时间）。因为关注点的不同，所以Parallel Scavenge收集器适合在后台运算而不需要太多交互的场合。<br>&emsp;&emsp;Parallel Scavenge有一个参数-XX:+UseAdaptiveSizePolicy，它可以开启GC自适应调节策略，就不需要手工指定新生代的大小(-Xmm)、Eden与Survivor区的比例(-XX:SurvivorRatio)、晋升老年代对象的大小(-XX:PretenureSizeThreshold)等参数，虚拟机会根据当前系统运行情况收集性能监控信息，动态的调节这些参数来达到最大的吞吐量。但还是要设置一些基本参数，如-Xmx（最大堆内存），然后选择优化的目标：-XX:MaxGCPauseMillis（最大GC停顿时间）和-XX:GCTimeRatio（吞吐量），二者选其一。这也是Parallel Scavenge收集器和ParNew收集器的重要区别。 </p>
+<h1 id="老年代"><a href="#老年代" class="headerlink" title="老年代"></a>老年代</h1><h2 id="Serial-Old-收集器"><a href="#Serial-Old-收集器" class="headerlink" title="Serial Old 收集器"></a>Serial Old 收集器</h2><p><a href="/blog/2019/12/01/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/#标记-整理算法">== 标记-整理算法 ==</a><br>&emsp;&emsp;顾名思义，Serial Old收集器是单线程的老年代收集器，主要在Client模式下的虚拟机使用。在Server模式下主要有两大用途：一是与Parallel Scavenge搭配使用（JDK1.5及以前），二是作为CMS收集器的后备预案（CMS发生“Concurrent Mode Failure”并发收集失败时）。</p>
+<h2 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a>Parallel Old 收集器</h2><p><a href="/blog/2019/12/01/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/#标记-整理算法">== 标记-整理算法 ==</a><br>&emsp;&emsp;Parallel Old收集器是Parallel Scavenge收集器的老年代版本，诞生于JDK1.6时。在此之前，由于Parallel Scavenge收集器的搭配选择，除了Serial Old收集器外别无他选。如果选择Serial Old收集器，由于Serial Old收集器在服务器端的性能拖累，并且无法充分利用多CPU的处理能力，从而无法达到吞吐量最大化的效果。由此，Parallel Old出现后，Parallel Scavenge收集器终于有了合适的搭档。</p>
+<h2 id="CMS-收集器（Concurrent-Mark-Sweep）"><a href="#CMS-收集器（Concurrent-Mark-Sweep）" class="headerlink" title="CMS 收集器（Concurrent Mark Sweep）"></a>CMS 收集器（Concurrent Mark Sweep）</h2><p><a href="/blog/2019/12/01/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/#标记-清除算法">== 标记-清除算法 ==</a><br>&emsp;&emsp;CMS收集器是一个并发收集器，与“吞吐量优先”收集器（Parallel Scavenge/Parallel Old收集器）不同的是，它注重的是以获取最短停顿时间为目标。目前的大部分应用都是直接与用户交互的。所以在响应速度和时间上，需要给用户更好的体验，由此CMS则符合这一需求。<br>&emsp;&emsp;CMS收集器的运作过程主要包括以下四个阶段：</p>
+<ul>
+<li>初始标记：只是标记一下GC Roots能直接关联到的对象，速度快，会造成STW；</li>
+<li>并发标记：GC Roots Tracing（跟搜索算法），耗时较长；</li>
+<li>重新标记：修正并发标记期间用户程序运行导致的标记变动的那一部分对象的标记记录，所以需要STW，以免再次产生变化，该阶段的停顿时间会比初始标记的停顿时间稍长。</li>
+<li>并发清除：会造成内存碎片化，并且消耗时间长。</li>
+</ul>
+<p>CMS体现出了并发收集和低停顿两个优点，但也还存在着3个明显的缺点：</p>
+<ol>
+<li>对CPU资源非常敏感：因为在并发标记和并发清除阶段，虽然不会发生STW，但是却占用了一部分的CPU资源而导致用户程序变慢，吞吐量降低。默认的启动回收线程数=(CPU数量 + 3)/4，所以随着CPU数量的增加，对用户程序运行的影响就会越小，反之则影响越大。</li>
+<li>无法处理浮动垃圾：由于并发清理阶段用户线程还在运行，程序运行自然还会有新的垃圾不断产生，这部分垃圾出现在标记后，所以无法在当次收集中清除，只有在下一次GC时再清理。这部分垃圾就称为“浮动垃圾”，此时就可能出现“Concurrent Mode Failure”而导致另一次的Full GC。一般可以通过参数-XX:CMSInitiatingOccupancyFraction设置CMS GC的触发阈值。该参数并不是越高越好，如果设置过高，很容易造成“Concurrent Mode Failure”失败。得根据年轻代的大小来适当的调整这个阈值。</li>
+<li>会产生内存碎片：因为CMS收集器采用的是标记-清除算法实现的，所以在并发收集结束后，会产生大量的内存碎片。较大的对象进入老年代后因无法找到连续的内存碎片，就不得不触发一次Full GC。</li>
+</ol>
+<h1 id="无分代"><a href="#无分代" class="headerlink" title="无分代"></a>无分代</h1><h2 id="G1-收集器（Garbage-First）"><a href="#G1-收集器（Garbage-First）" class="headerlink" title="G1 收集器（Garbage First）"></a>G1 收集器（Garbage First）</h2><p><a href="/blog/2019/12/01/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/#标记-整理算法">== 标记-整理算法 ==</a><br>G1收集器是一个面向服务端应用的收集器，相比其他GC收集器，它主要有以下特点：</p>
+<ol>
+<li>并发与并行：在当代CPU、多核的环境下，G1能够充分的利用其硬件优势，来减少STW的停顿时间。</li>
+<li>分代收集：虽然G1中还存在新生代和老年代的概念，但是G1收集器并不需要与其他收集器配合使用，它可覆盖整个GC堆，独立管理，分代回收。</li>
+<li>空间整合：因为使用的是“标记-整理”算法，所以G1收集器不会像CMS那样产生内存碎片，清理完成后可以整合可用内存，这样就不会因为分配大对象时无法找到连续内存而触发另一次GC了。</li>
+<li>可预测停顿：与CMS一样都是以最短停顿为目标而设计的，但相对于CMS，G1可以建立可预测停顿时间的模型，可以实现让使用者控制消耗在垃圾收集器上的时间范围。</li>
+</ol>
+<p>&emsp;&emsp;根据个人的理解，我把G1列入无分代的标题内容中，原因也是它的分代收集的机制，虽然保留了新生代和老年代的概念，但他们不在是物理隔离的。G1将整个Java堆分为多个大小相等的独立区域（Region），而新生代和老年代就是一部分的Region集合。<br>&emsp;&emsp;G1会在后台维护一个优先列表，记录着每个Region里的垃圾堆积的价值大小（回收可获得的空间大小及回收时间的经验值），G1会根据这个优先列表保证在有限时间内可以达到更好的收集效率，这就是G1为什么可以做到可预测停顿。<br>G1与CMS收集器的收集阶段很相似，同样的可分为四个阶段：</p>
+<ul>
+<li>初始标记：只是标记GC Roots能直接关联的对象，并且秀爱TAMS(Next Top at Mart Start)的值，让下一阶段并发运行时，用户可以在可用的Region中创建对象，需要STW，但时间很短。</li>
+<li>并发标记：从GC Roots开始对堆中的对象进行可达性分析，消耗时间较长，但可以与用户线程并发执行。</li>
+<li>最终标记：由于并发标记阶段用户线程还在执行，因而也会有垃圾产生，所以这个阶段只是修正并发标记变动的那一部分记录，需要STW，但是可以并行标记。</li>
+<li>筛选回收：先对各个Region的回收价值和成本进行排序，然后根据用户指定的回收时间来指定回收计划。</li>
+</ul>
+	
+		<hr>
+		<span>
+			
+	<div class="tag-cloud-tags">
+	
+			<a href="/blog/tags/JVM/" class="fa fa-tags">
+				JVM
+			</a>
+	
+			<a href="/blog/tags/JAVA/" class="fa fa-tags">
+				JAVA
+			</a>
+	
+			<a href="/blog/tags/GC/" class="fa fa-tags">
+				GC
+			</a>
+	
+	</div>
+		
+		</span>
+	</div>
+	<div id="current-post-cover" data-scr="/blog/img/2.jpg"></div>
+
+	<!-- relate post, comment...-->
+	<div class="investment-container">
+		<div class="investment-header">
+			<!-- <div class="investment-title-1">
+				<div class="on">相关文章</div>
+				<div>评论</div>
+				<div>分享</div>
+			</div> -->
+			<div class="investment-title-2">	            
+				
+	<span>
+		<a href="javascript: window.scrollTo(0, 961);" target="">返回顶部</a>
+		
+			<a href="/blog/2019/12/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" title="面向对象设计的7个原则" rel="prev">
+				&laquo;上一篇
+			</a>
+		
+		
+			<a href="/blog/2019/12/01/JVM%E5%9F%BA%E7%A1%80/%E6%B5%85%E8%B0%88Java%20GC%E7%AE%97%E6%B3%95/" title="浅谈Java垃圾回收算法" rel="next">
+				下一篇&raquo;
+			</a>
+			
+	</span>
+
+
+      		
+			</div>	
+		</div>
+		
+		<!-- <div class="investment-content">
+			<div class="investment-content-list">
+				
+
+<div class="relate-post">
+	
+		<div>暂未开放</div>	
+	
+</div>	
+			</div>
+			<div class="investment-content-list">
+				<div class="layout-comment">
+
+	
+
+</div>
+			</div>
+			<div class="investment-content-list">
+				<div class="layout-share">
+	
+	
+</div>
+
+
+			</div>
+		</div> -->
+	</div>
+	</div>
+</div>
+
+
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+
+<!-- show math formula -->
+
+
+
+	 
+	
+<script src="/blog/plugin/clipboard/clipboard.js"></script>
+
+	<script>
+		// Copy code !
+	    function codePreprocessing() {
+	        $("#article-content .highlight").each(function() {
+
+	            $(this).wrap('<div id="post-code"></div>');
+
+	        })
+
+	        $("#article-content #post-code").each(function() {
+
+	            $(this).prepend('<nav class="copy-nav"><span><i class="code-language"></i></span></nav>');
+
+	        })
+
+	        $("#article-content .copy-nav").each(function() {
+	            var temp = $(this).next().attr('class'),
+	                language = ((temp.length > 9) && (temp != null)) ? temp.substr(10) : "none"; //why 9? Need to check language?
+
+	            $(this).find('.code-language').text(language);
+
+	            $(this).append('<span class="copy-btn"><i class="fa fa-copy" aria-hidden="true"></i></span>');
+
+	        });
+	    }
+
+		function codeCopy() {
+		    $('#article-content #post-code').each(function(i) {
+		        var codeCopyId = 'codeCopy-' + i;
+
+		        var codeNode = $(this).find('.code'),
+		            copyButton = $(this).find('.copy-btn');
+
+		        codeNode.attr('id', codeCopyId);
+		        copyButton.attr('data-clipboard-target-id', codeCopyId);
+		    })
+
+		    
+			var clipboard = new ClipboardJS('.copy-btn', {
+					target: function(trigger) {
+						return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+					}
+		      	});
+
+			//pure js
+			function showTooltip(elem, msg) {		   
+				elem.setAttribute('aria-label', msg);
+				elem.setAttribute('class', 'copy-btn copy-status');
+				setTimeout(function() {
+					elem.setAttribute('class', 'copy-btn');
+				}, 2000);
+			}
+
+			clipboard.on('success', function(e) {
+			    e.clearSelection();
+			    console.info('Action:', e.action);		   
+			    console.info('Trigger:', e.trigger);
+			    showTooltip(e.trigger, 'Copied!');
+			    
+			});
+			clipboard.on('error', function(e) {
+			    console.error('Action:', e.action);
+			    console.error('Trigger:', e.trigger);
+			});
+		
+
+		}
+
+		if ($('.layout-post').length) {
+		    codePreprocessing();
+		    codeCopy();
+		} 
+	</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/plugin/fancybox/jquery.fancybox.css">
+
+
+<script src="/blog/plugin/fancybox/jquery.fancybox.js"></script>
+
+
+<script type="text/javascript">
+	var titleID = $('.article-title a'),
+		imageID = $('.article-content img'),
+		videoID = $('.article-content video');
+
+	var postTitle = titleID.text() ? titleID.text() : "No post title!";
+
+	imageID.each(function() {
+		var imgPath = $(this).attr('src'),
+			imgTitle = $(this).attr('alt') ? $(this).attr('alt') : "No image description!";
+
+		//给每个匹配的<img>元素打包, 即添加父元素<a>
+		$(this).wrap('<a data-fancybox="gallery" data-caption=" 《 ' + postTitle + ' 》 ' + imgTitle + ' "  href=" ' + imgPath + ' "> </a>');
+	});
+
+	videoID.each(function() {
+		var videoPath = $(this).attr('src');
+
+		//给每个匹配的<img>元素打包, 即添加父元素<a>
+		$(this).wrap('<a data-fancybox href=" ' + videoPath + ' "> </a>');
+	});
+	//TODO：支持html5 video
+
+	if($('#layout-post').length) {
+		$('[data-fancybox="gallery"]').fancybox({
+			loop: true,
+			buttons: [
+				"zoom",
+				"share",
+				"slideShow",
+				"fullScreen",
+				//"download",
+				"thumbs",
+				"close"
+			],
+			protect: false
+		});
+	}
+</script>
+		</main>
+
+		<!--footer-->
+		<footer>
+	<div class="social">
+		<ul>
+	
+		<li>
+			<a href="https://github.com/DummyProdigal/" target="_blank">
+				<i class="fa fa-github"></i>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+		
+	<div class="copyright">
+		<p>
+			 
+				&copy;2019 - 2020, content by 橙子. All Rights Reserved.
+			
+			
+			
+
+	<!-- busuanzi -->
+	<!-- busuanzi -->
+<!-- 
+		
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+		<span id="busuanzi_container_page_pv">
+	  		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		</span>
+
+	
+
+ -->
+
+
+		</p>
+		<p>
+			<a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> Theme <a href="https://github.com/Sariay/hexo-theme-Annie" title="Annie" target="_blank" rel="noopener">Annie</a> by Sariay.
+			<a href="javascript:zh_tran('s');" class="zh_click" id="zh_click_s">简体</a> 
+			<a href="javascript:zh_tran('t');" class="zh_click" id="zh_click_t">繁體</a>				
+		</p>
+	</div>		
+</footer>
+		
+	<!-- set '1' to show motto in all pages! -->
+
+	
+<script src="/blog/plugin/motto/motto.js"></script>
+
+	
+	<script type="text/javascript">
+		$(".motto").html( getMingYanContent() );
+	</script>	
+
+
+
+
+	<!--
+	时间：2018-10-3
+	描述：
+		插件名称：hexo-generator-search-zip
+		插件来源: https://github.com/SuperKieran/hexo-generator-search-zip
+		代码参考：https://github.com/SuperKieran/TKL/blob/master/layout/_partial/search.ejs(Include: js & css)	
+-->
+<div class="popup search-popup local-search-popup" >
+	<div class="local-search-container">
+		<span class="popup-btn-close">
+      		ESC
+   		</span>
+		<div class="local-search-header">
+			<div class="input-prompt">				
+			</div>
+			<input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+		</div>
+		<div class="local-search-body">
+			<div id="local-search-output"></div>
+		</div>
+		<div class="local-search-footer">
+			<div class="topN-post">				
+				
+								
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script src="/blog/plugin/search/ziploader.js"></script>
+<script src="/blog/plugin/search/search.js"></script>
+
+
+<script type="text/javascript">
+	var search_path = 'search.json',
+		zip_Path = '/blog/search.zip',
+		version_Path = '/blog/searchVersion.txt',
+		input_Trigger = 'auto',
+		top_N = '2';
+
+	themeLocalSearch({
+		search_path, 
+		zip_Path, 
+		version_Path, 
+		input_Trigger, 
+		top_N
+	});
+</script>
+
+
+<!-- love effect -->
+
+
+<!-- back to top -->
+
+	
+	<div id="totop">
+  		<a href="javascript:;"  name="TOTOP" class="fa fa-arrow-up" ></a>
+	</div>
+
+
+
+
+<!-- site analysis -->
+
+
+	<!-- site-analysis -->
+	
+
+	
+	
+	
+	
+ 
+
+
+<script src="/blog/plugin/vibrant/vibrant.js"></script>
+<script src="/blog/plugin/chinese/chinese.js"></script>
+<script src="/blog/plugin/imgLazyLoader/yall.min.js"></script>
+<script src="/blog/plugin/imgResize/jquery.resizeimagetoparent.min.js"></script>
+<script src="/blog/plugin/nicescroll/jquery.nicescroll.js"></script>
+<script src="/blog/js/resizediv.js"></script>
+<script src="/blog/js/main.js"></script>
+
+	</body>	
+</html>

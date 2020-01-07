@@ -1,0 +1,31 @@
+.tag-cloud-tags {
+  margin: 10px 0;
+  padding-top: 2em;
+}
+.tag-cloud-tags a {
+  display: inline-block;
+  position: relative;
+  margin: 5px 10px;
+  word-wrap: break-word;
+  transition-duration: 0.3s;
+  transition-property: transform;
+  transition-timing-function: ease-out;
+}
+.tag-cloud-tags a:active,
+.tag-cloud-tags a:focus,
+.tag-cloud-tags a:hover {
+  color: $light-global-link-hover-color;
+  transform: scale(1.1);
+}
+.dark-theme .tag-cloud-tags a:active,
+.dark-theme .tag-cloud-tags a:focus,
+.dark-theme .tag-cloud-tags a:hover {
+  color: $dark-global-link-hover-color;
+}
+.tag-cloud-tags a small {
+  margin: 0 0.3em;
+  color: $light-font-secondary-color;
+}
+.dark-theme .tag-cloud-tags a small {
+  color: $dark-global-link-hover-color;
+}
